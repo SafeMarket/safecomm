@@ -1,0 +1,33 @@
+{
+  "name": "safecomm-utils",
+  "version": "0.0.0",
+  "description": "Encrypted messaging on Ethereum",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js --bail"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SafeMarket/safecomm-utils.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SafeMarket/safecomm/issues"
+  },
+  "homepage": "https://github.com/SafeMarket/safecomm#readme",
+  "dependencies": {
+    "amorph": "^1.1.0",
+    "amorph-buffer": "^1.1.1",
+    "arguguard": "0.0.5",
+    "elliptic": "^6.3.3",
+    "js-sha3": "^0.5.7",
+    "testable-error": "^0.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-amorph": "0.0.2",
+    "ecc-keypair": "0.0.1",
+    "mocha": "^3.2.0"
+  }
+}
