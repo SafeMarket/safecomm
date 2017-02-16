@@ -3,7 +3,7 @@ const Amorph = require('amorph')
 const crypto = require('crypto')
 const EC = require('elliptic').ec
 const rlp = require('rlp')
-const keccak_256 = require('js-sha3').keccak_256
+const _keccak256 = require('js-sha3').keccak_256
 const IVError = require('./errors/IV')
 const amorphBufferPlugin = require('amorph-buffer')
 const chai = require('chai')
@@ -17,6 +17,13 @@ chai.should()
 
 const ec = new EC('secp256k1')
 
+function hash(prehash) {
+  arguguard('keccak256', [Amorph], arguments)
+  return prehash.as('uint8Array', (uint8Array) => {
+    return Amorph.crossConverter.convert(_keccak256(uint8Array), 'hex', 'uint8Array')
+  })
+}
+
 function random(bytes) {
   arguguard('random', ['number'], arguments)
   return new Amorph(crypto.randomBytes(bytes), 'buffer')
@@ -24,14 +31,14 @@ function random(bytes) {
 
 function getBilateralKey(privateKey, publicKey) {
   arguguard('getBilateralKey', [Amorph, Amorph], arguments)
-  return privateKey.as('buffer', (privateKeyBuffer) => {
+  const derived = privateKey.as('buffer', (privateKeyBuffer) => {
     const ecKeypair = ec.keyFromPrivate(privateKeyBuffer)
     const ecPublicKey = ec.keyFromPublic(publicKey.to('buffer')).getPublic()
     const derived = ecKeypair.derive(ecPublicKey)
     return derived.toBuffer()
-  }).as('uint8Array', (uint8Array) => {
-    return Amorph.crossConverter.convert(keccak_256(uint8Array), 'hex', 'uint8Array')
-  }).as('array', (bilateralKeyArray) => {
+  })
+
+  return hash(derived).as('array', (bilateralKeyArray) => {
     return bilateralKeyArray.slice(16)
   })
 }
@@ -89,5 +96,6 @@ module.exports = {
   decrypt,
   encapsulate,
   unencapsulate,
-  getBilateralKey
+  getBilateralKey,
+  hash
 }
