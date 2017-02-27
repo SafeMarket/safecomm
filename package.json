@@ -17,11 +17,12 @@
   },
   "homepage": "https://github.com/SafeMarket/safecomm#readme",
   "dependencies": {
+    "aes-128-cbc-amorph": "0.0.1",
     "amorph": "^1.1.0",
     "amorph-buffer": "^1.1.1",
     "arguguard": "0.0.5",
     "elliptic": "^6.3.3",
-    "js-sha3": "^0.5.7",
+    "keccak256-amorph": "0.0.1",
     "testable-error": "^0.1.1"
   },
   "devDependencies": {
